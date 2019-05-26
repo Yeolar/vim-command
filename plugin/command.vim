@@ -21,14 +21,7 @@ fun! s:comment(arg)
     else
       exec "normal A"."Added by Yeolar"
     endif
-  elseif (a:arg == "d")
-    exec "normal a".strftime("%Y-%m-%d")
   endif
-endfun
-
-fun! s:comment_author(arg)
-  let s:cc = "// @author Yeolar (yeolar@gmail.com)"
-  exec "normal O".s:cc
 endfun
 
 fun! s:cc_comment(arg)
@@ -40,12 +33,7 @@ fun! s:cc_comment(arg)
   endif
 endfun
 
-fun! s:copyright(arg)
-  let s:cc = "Copyright ".strftime("%Y")." Yeolar"
-  exec "normal O".s:cc
-endfun
-
-fun! s:apache_lic(arg)
+fun! s:license_apache(arg)
   let s:lic = "Licensed under the Apache License, Version 2.0 (the \"License\");\<enter>you may not use this file except in compliance with the License.\<enter>You may obtain a copy of the License at\<enter>\<enter>  http://www.apache.org/licenses/LICENSE-2.0\<enter>\<enter>\<bs>\<bs> Unless required by applicable law or agreed to in writing, software\<enter>distributed under the License is distributed on an \"AS IS\" BASIS,\<enter>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\<enter>See the License for the specific language governing permissions and\<enter>limitations under the License."
   exec "normal O"."\<enter>".s:lic
 endfun
@@ -60,7 +48,7 @@ fun! s:c_head_file_def(arg)
 endfun
 
 fun! s:c_namespace(arg)
-  for key in split(a:arg)
+  for key in split(a:arg, ':', 1)
     if (key != "")
       let s:ns = " ".key
     else
@@ -70,11 +58,9 @@ fun! s:c_namespace(arg)
   endfor
 endfun
 
-command! -nargs=? C    :call s:comment("<args>")
-command! -nargs=? CA   :call s:comment_author("<args>")
-command! -nargs=? CC   :call s:cc_comment("<args>")
-command! -nargs=? CR   :call s:copyright("<args>")
-command! -nargs=? LICA :call s:apache_lic("<args>")
-command! -nargs=? CH   :call s:c_head_file_def("<args>")
-command! -nargs=? CNS  :call s:c_namespace("<args>")
+command! -nargs=? C       :call s:comment("<args>")
+command! -nargs=? CC      :call s:cc_comment("<args>")
+command! -nargs=? Lapache :call s:license_apache("<args>")
+command! -nargs=? CH      :call s:c_head_file_def("<args>")
+command! -nargs=? CNS     :call s:c_namespace("<args>")
 
